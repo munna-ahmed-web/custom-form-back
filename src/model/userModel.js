@@ -15,6 +15,17 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    lastLogIn: {
+      type: Date,
+    },
   },
   { timestamps: true, id: true }
 );
