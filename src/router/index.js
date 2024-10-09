@@ -16,11 +16,11 @@ router.patch("/users/:id", checkToken, userController.updateUser);
 router.delete("/users/:id", checkToken, userController.deleteUserById);
 
 //private route
-router.get("template", templateController.findAllTemplates);
-router.post("template", checkToken, templateController.createTemplate);
-router.post("template/:id", checkToken, templateController.updateTemplate);
+router.get("/template", templateController.findAllTemplates);
+router.post("/template", checkToken, templateController.createTemplate);
+router.post("/template/:id", checkToken, templateController.updateTemplate);
 router.delete(
-  "template/:id",
+  "/template/:id",
   checkToken,
   templateController.deleteTemplateById
 );
