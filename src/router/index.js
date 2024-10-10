@@ -6,17 +6,18 @@ const { checkToken } = require("../middleware/auth");
 
 const router = Router();
 
-//public routes
+//public routes------------------------------------------------------------
 router.post("/register", userController.createUser);
 router.post("/login", authController.login);
 
-// private routes for admin
+// user management routes for admin-----------------------------------------
 router.get("/users", checkToken, userController.getUsers);
 router.patch("/users/:id", checkToken, userController.updateUser);
 router.delete("/users/:id", checkToken, userController.deleteUserById);
 
-//private route
+//template route-------------------------------------------------------------
 router.get("/template", templateController.findAllTemplates);
+//private
 router.post("/template", checkToken, templateController.createTemplate);
 router.post("/template/:id", checkToken, templateController.updateTemplate);
 router.delete(

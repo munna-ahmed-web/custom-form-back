@@ -14,9 +14,9 @@ const templateSchema = new Schema(
     description: {
       type: Schema.Types.String,
     },
-    topic: {
-      type: Schema.Types.String,
-    },
+    // topic: {
+    //   type: Schema.Types.String,
+    // },
     imageUrl: {
       type: Schema.Types.String,
     },
@@ -24,6 +24,21 @@ const templateSchema = new Schema(
       type: Schema.Types.Boolean,
       default: true,
     },
+    questions: [
+      {
+        type: {
+          type: Schema.Types.String,
+          enum: ["string", "int"],
+        },
+        question: {
+          type: Schema.Types.String,
+        },
+        isActive: {
+          type: Schema.Types.Boolean,
+          default: true,
+        },
+      },
+    ],
   },
   { timestamps: true, id: true }
 );
