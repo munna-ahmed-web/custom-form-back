@@ -19,6 +19,7 @@ const login = async ({ email, password }) => {
     id: user.id,
     name: user.name,
     email: user.email,
+    isAdmin: user.isAdmin,
   };
   const token = geneateJWTtoken(payload);
   if (!token) {
