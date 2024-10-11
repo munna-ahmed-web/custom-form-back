@@ -46,14 +46,18 @@ const createUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   const isAdmin = req.user.isAdmin;
   const userId = req.params.id;
-  const { adminStatus } = req.body;
+  const { adminStatus, activeStatus } = req.body;
   if (!isAdmin) {
     return res
       .status(403)
       .json({ message: "Forbidden, only admin can access this" });
   }
   try {
-    const response = await userService.updateUserStatus(userId, adminStatus);
+    const response = await userService.updateUserStatus(
+      userId,
+      adminStatus,
+      activeStatus
+    );
     const { password, ...userWithoutPasword } = response;
     res.status(200).json({ message: "success", data: userWithoutPasword });
   } catch (error) {
@@ -71,7 +75,7 @@ const deleteUserById = async (req, res, next) => {
   }
   try {
     const deletedUser = await userService.deleteUserById(userId);
-    res.staus(200).json({ message: "Success", data: deletedUser });
+    res.status(200).json({ message: "Success", data: deletedUser });
   } catch (error) {
     next(error);
   }

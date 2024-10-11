@@ -33,7 +33,7 @@ const createUser = async (name, email, password) => {
   }
 };
 
-const updateUserStatus = async (userId, adminStatus) => {
+const updateUserStatus = async (userId, adminStatus, activeStatus) => {
   try {
     const user = await findUserById(userId);
     if (!user) {
@@ -41,7 +41,12 @@ const updateUserStatus = async (userId, adminStatus) => {
       error.status = 404;
       throw error;
     }
-    user.isAdmin = adminStatus;
+    if (typeof adminStatus === "boolean") {
+      user.isAdmin = adminStatus;
+    }
+    if (typeof activeStatus === "boolean") {
+      user.isActive = activeStatus;
+    }
     const response = await user.save();
     return response;
   } catch (err) {

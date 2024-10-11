@@ -55,13 +55,12 @@ const updateTemplate = async (user, templateId, updateData) => {
 
 const deleteTemplateById = async (user, templateId) => {
   try {
-    if (user.isAdmin) {
-      const template = await templateModel.findByIdAndDelete(id);
-      if (!template) {
-        const error = new Error("Template not found");
-        error.status = 404;
-        throw error;
-      }
+    const template = await templateModel.findByIdAndDelete(id);
+    if (!template) {
+      const error = new Error("Template not found");
+      error.status = 404;
+      throw error;
+
       return template;
     } else {
       const template = await templateModel.findById(templateId);

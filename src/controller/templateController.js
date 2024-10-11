@@ -46,6 +46,11 @@ const updateTemplate = async (req, res, next) => {
 };
 const deleteTemplateById = async (req, res, next) => {
   const { id } = req.params;
+  if (!req.user.isAdmin) {
+    return res
+      .status(403)
+      .json({ message: "You do not have permission to delete" });
+  }
   try {
     const isDeleted = await templateService.deleteTemplateById(req.user, id);
     res.status(204).json({ message: "deleted Successfully" });
