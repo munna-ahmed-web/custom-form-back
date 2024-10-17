@@ -8,18 +8,27 @@ const findAllTemplates = async (req, res, next) => {
     next(error);
   }
 };
+const findSingleTemplateById = async (req, res, next) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(404).json({ message: "Id not found" });
+  }
+  try {
+    const template = await templateService.findSingleTemplateById(id);
+    res.status(200).json({ message: "Success", data: template });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const createTemplate = async (req, res, next) => {
   const { userId, title, description } = req.body;
+  const payload = req.body;
   if (!userId || !title) {
     return res.status(400).json({ message: "All field are required" });
   }
   try {
-    const template = await templateService.createTemplate(
-      userId,
-      title,
-      description
-    );
+    const template = await templateService.createTemplate(payload);
     res.status(201).json({ message: "Success", data: template });
   } catch (error) {
     next(error);
@@ -61,6 +70,7 @@ const deleteTemplateById = async (req, res, next) => {
 
 module.exports = {
   findAllTemplates,
+  findSingleTemplateById,
   createTemplate,
   updateTemplate,
   deleteTemplateById,

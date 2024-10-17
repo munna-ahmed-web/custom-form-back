@@ -8,10 +8,18 @@ const findAllTemplates = async () => {
     throw error;
   }
 };
-
-const createTemplate = async (userId, title, description = "") => {
+const findSingleTemplateById = async (id) => {
   try {
-    const template = new templateModel({ userId, title, description });
+    const template = await templateModel.findById(id);
+    return template;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const createTemplate = async (payload) => {
+  try {
+    const template = new templateModel({ ...payload });
     const savedTemplate = await template.save();
     return savedTemplate;
   } catch (error) {
@@ -87,4 +95,5 @@ module.exports = {
   createTemplate,
   updateTemplate,
   deleteTemplateById,
+  findSingleTemplateById,
 };

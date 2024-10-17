@@ -14,9 +14,7 @@ const templateSchema = new Schema(
     description: {
       type: Schema.Types.String,
     },
-    // topic: {
-    //   type: Schema.Types.String,
-    // },
+    topic: [{ type: Schema.Types.String }],
     imageUrl: {
       type: Schema.Types.String,
     },

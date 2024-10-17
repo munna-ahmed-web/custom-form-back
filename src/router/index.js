@@ -17,6 +17,7 @@ router.delete("/users/:id", checkToken, userController.deleteUserById);
 
 //template route-------------------------------------------------------------
 router.get("/template", templateController.findAllTemplates);
+router.get("/template/:id", templateController.findSingleTemplateById);
 //private
 router.post("/template", checkToken, templateController.createTemplate);
 router.post("/template/:id", checkToken, templateController.updateTemplate);
