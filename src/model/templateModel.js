@@ -14,7 +14,7 @@ const templateSchema = new Schema(
     description: {
       type: Schema.Types.String,
     },
-    topic: [{ type: Schema.Types.String }],
+    topic: [String],
     imageUrl: {
       type: Schema.Types.String,
     },
@@ -40,6 +40,13 @@ const templateSchema = new Schema(
   },
   { timestamps: true, id: true }
 );
+
+templateSchema.index({
+  title: "text",
+  description: "text",
+  topic: "text",
+  "questions.question": "text",
+});
 
 const templateModel = new model("Template", templateSchema);
 

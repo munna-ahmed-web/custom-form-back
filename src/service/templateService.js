@@ -1,5 +1,19 @@
 const templateModel = require("../model/templateModel");
 
+const searchTemplates = async (searchTerm) => {
+  try {
+    const templates = await templateModel
+      .find(
+        { $text: { $search: searchTerm } },
+        { score: { $meta: "textScore" } }
+      )
+      .sort({ score: { $meta: "textScore" } });
+    return templates;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const findAllTemplates = async () => {
   try {
     const templates = await templateModel.find({});
@@ -96,4 +110,5 @@ module.exports = {
   updateTemplate,
   deleteTemplateById,
   findSingleTemplateById,
+  searchTemplates,
 };

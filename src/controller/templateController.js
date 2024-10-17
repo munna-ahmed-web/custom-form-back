@@ -1,5 +1,20 @@
 const templateService = require("../service/templateService");
 
+const searchTemplates = async (req, res, next) => {
+  const { search } = req.query;
+  try {
+    if (search) {
+      const templates = await templateService.searchTemplates(search);
+      return res.status(200).json({ message: "Success", data: templates });
+    } else {
+      const templates = await templateService.findAllTemplates();
+      return res.status(200).json({ message: "Success", data: templates });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 const findAllTemplates = async (req, res, next) => {
   try {
     const templates = await templateService.findAllTemplates();
@@ -74,4 +89,5 @@ module.exports = {
   createTemplate,
   updateTemplate,
   deleteTemplateById,
+  searchTemplates,
 };
