@@ -36,6 +36,20 @@ const findSingleTemplateById = async (req, res, next) => {
   }
 };
 
+const findTemplatesByUserId = async (req, res, next) => {
+  const user = req.user;
+  const { userId } = req.params;
+  if (!userId) {
+    return res.status(400).json({ message: "User not found" });
+  }
+  try {
+    const templates = await templateService.findTemplatesByUserId(user, userId);
+    res.status(200).json({ message: "Success", data: templates });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const createTemplate = async (req, res, next) => {
   const { userId, title, description } = req.body;
   const payload = req.body;
@@ -52,6 +66,7 @@ const createTemplate = async (req, res, next) => {
 const updateTemplate = async (req, res, next) => {
   const { id } = req.params;
   const updateData = req.body;
+
   if (!updateData || Object.keys(updateData).length === 0) {
     return res.status(400).json({ messga: "No updated data provided" });
   }
@@ -70,11 +85,6 @@ const updateTemplate = async (req, res, next) => {
 };
 const deleteTemplateById = async (req, res, next) => {
   const { id } = req.params;
-  if (!req.user.isAdmin) {
-    return res
-      .status(403)
-      .json({ message: "You do not have permission to delete" });
-  }
   try {
     const isDeleted = await templateService.deleteTemplateById(req.user, id);
     res.status(204).json({ message: "deleted Successfully" });
@@ -90,4 +100,5 @@ module.exports = {
   updateTemplate,
   deleteTemplateById,
   searchTemplates,
+  findTemplatesByUserId,
 };
