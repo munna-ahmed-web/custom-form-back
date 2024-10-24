@@ -1,5 +1,15 @@
 const formService = require("../service/formService");
 
+const getFormsByUserId = async (req, res, next) => {
+  const { userId } = req.params;
+
+  try {
+    const forms = await formService.getFormsByUserId(userId);
+    res.status(200).json({ message: "success", data: forms });
+  } catch (error) {
+    next(error);
+  }
+};
 const getFormsByTemplateId = async (req, res, next) => {
   const { templateId } = req.params;
 
@@ -21,4 +31,4 @@ const createForm = async (req, res, next) => {
   }
 };
 
-module.exports = { createForm, getFormsByTemplateId };
+module.exports = { createForm, getFormsByTemplateId, getFormsByUserId };

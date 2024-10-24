@@ -3,6 +3,7 @@ const userController = require("../controller/userController");
 const authController = require("../controller/authController");
 const templateController = require("../controller/templateController");
 const formController = require("../controller/formController");
+const commentController = require("../controller/commentController");
 const { checkToken } = require("../middleware/auth");
 
 const router = Router();
@@ -35,8 +36,18 @@ router.delete(
 );
 
 //form route-------------------------------------------------------------
-router.get("/form/:templateId", formController.getFormsByTemplateId);
 //private
+router.get("/form/user/:userId", checkToken, formController.getFormsByUserId);
+router.get(
+  "/form/:templateId",
+  checkToken,
+  formController.getFormsByTemplateId
+);
 router.post("/form/create", checkToken, formController.createForm);
+
+//form route-------------------------------------------------------------;
+router.get("/comment", commentController.getCommentByTemplateId);
+//private
+router.post("/comment/create", checkToken, commentController.createComment);
 
 module.exports = router;

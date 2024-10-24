@@ -11,6 +11,17 @@ const getFormsByTemplateId = async (templateId) => {
     throw error;
   }
 };
+const getFormsByUserId = async (userId) => {
+  try {
+    const formsList = await formModel.find({ user: userId }).populate([
+      { path: "user", select: "name email" },
+      { path: "template", select: "title description" },
+    ]);
+    return formsList;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const createForm = async (payload) => {
   try {
@@ -25,4 +36,5 @@ const createForm = async (payload) => {
 module.exports = {
   createForm,
   getFormsByTemplateId,
+  getFormsByUserId,
 };
