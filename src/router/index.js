@@ -37,13 +37,15 @@ router.delete(
 
 //form route-------------------------------------------------------------
 //private
+router.get("/form/:id", checkToken, formController.getFormById);
 router.get("/form/user/:userId", checkToken, formController.getFormsByUserId);
 router.get(
-  "/form/:templateId",
+  "/form/template/:templateId",
   checkToken,
   formController.getFormsByTemplateId
 );
 router.post("/form/create", checkToken, formController.createForm);
+router.patch("/form/update/:id", checkToken, formController.updateForm);
 
 //form route-------------------------------------------------------------;
 router.get("/comment", commentController.getCommentByTemplateId);
