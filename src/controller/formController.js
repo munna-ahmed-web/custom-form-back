@@ -13,7 +13,7 @@ const getFormsByUserId = async (req, res, next) => {
   const { userId } = req.params;
 
   try {
-    const forms = await formService.getFormsByUserId(userId);
+    const forms = await formService.getFormsByUserId(req.user, userId);
     res.status(200).json({ message: "success", data: forms });
   } catch (error) {
     next(error);

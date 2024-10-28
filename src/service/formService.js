@@ -19,8 +19,15 @@ const getFormsByTemplateId = async (templateId) => {
     throw error;
   }
 };
-const getFormsByUserId = async (userId) => {
+const getFormsByUserId = async (user, userId) => {
   try {
+    if (user.isAdmin) {
+      const formsList = await formModel.find({}).populate([
+        { path: "user", select: "name email" },
+        { path: "template", select: "title description" },
+      ]);
+      return formsList;
+    }
     const formsList = await formModel.find({ user: userId }).populate([
       { path: "user", select: "name email" },
       { path: "template", select: "title description" },
