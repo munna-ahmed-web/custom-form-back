@@ -66,6 +66,18 @@ const deleteUserById = async (id) => {
     throw error;
   }
 };
+const getUserInfoById = async (id) => {
+  try {
+    const userInfo = await userModel.findById(id).select("name email");
+    if (!userInfo) {
+      const error = new Error("User not found");
+      error.status = 404;
+    }
+    return userInfo;
+  } catch (error) {
+    throw error;
+  }
+};
 
 const findUserByEmail = async (email) => {
   return userModel.findOne({ email });
@@ -81,4 +93,5 @@ module.exports = {
   updateUserStatus,
   findUserById,
   deleteUserById,
+  getUserInfoById,
 };

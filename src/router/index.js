@@ -4,6 +4,7 @@ const authController = require("../controller/authController");
 const templateController = require("../controller/templateController");
 const formController = require("../controller/formController");
 const commentController = require("../controller/commentController");
+const salesforceController = require("../controller/salesforceController");
 const { checkToken } = require("../middleware/auth");
 
 const router = Router();
@@ -16,6 +17,7 @@ router.post("/login", authController.login);
 router.get("/users", checkToken, userController.getUsers);
 router.patch("/users/:id", checkToken, userController.updateUser);
 router.delete("/users/:id", checkToken, userController.deleteUserById);
+router.get("/usersIfo/:userId", checkToken, userController.getUserInfoById);
 
 //template route-------------------------------------------------------------
 router.get("/template", templateController.findAllTemplates);
@@ -52,4 +54,10 @@ router.get("/comment", commentController.getCommentByTemplateId);
 //private
 router.post("/comment/create", checkToken, commentController.createComment);
 
+//form route-------------------------------------------------------------;
+router.post(
+  "/salesforce/create",
+  checkToken,
+  salesforceController.createSalesForce
+);
 module.exports = router;

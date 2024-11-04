@@ -80,10 +80,20 @@ const deleteUserById = async (req, res, next) => {
     next(error);
   }
 };
+const getUserInfoById = async (req, res, next) => {
+  const userId = req.params.userId;
+  try {
+    const userInfo = await userService.getUserInfoById(userId);
+    res.status(200).json({ message: "Success", data: userInfo });
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   getUsers,
   createUser,
   updateUser,
   deleteUserById,
+  getUserInfoById,
 };
