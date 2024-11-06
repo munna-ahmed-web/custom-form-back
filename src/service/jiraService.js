@@ -47,8 +47,8 @@ const createUser = async (email, name) => {
         },
       }
     );
-    console.log("User created with ID:", response.data.accountId);
-    return response.data;
+    // console.log("User created with ID:", response.data.accountId);
+    return response.data.accountId;
   } catch (error) {
     const errorMessage = error.response
       ? `Error: ${error.response.status} - ${
@@ -96,6 +96,18 @@ const createTicket = async (data) => {
     let userId = await getUserId(email);
     if (!userId) {
       userId = await createUser(email, name);
+      //   `${process.env.JIRA_TICKET_URL}`,
+      //   payload,
+      //   {
+      //     headers: {
+      //       Authorization: `Basic ${Buffer.from(
+      //         `${process.env.JIRA_API_EMAIL}:${process.env.JIRA_API_TOKEN}`
+      //       ).toString("base64")}`,
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
+      // return response.data;
     }
     const payload = {
       fields: {
