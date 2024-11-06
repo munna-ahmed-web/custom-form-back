@@ -49,6 +49,18 @@ const findTemplatesByUserId = async (req, res, next) => {
     next(error);
   }
 };
+const findTemplatesByUser = async (req, res, next) => {
+  const user = req.user;
+  try {
+    const templates = await templateService.findTemplatesByUserId(
+      user,
+      user._id
+    );
+    res.status(200).json({ message: "Success", data: templates });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const createTemplate = async (req, res, next) => {
   const { userId, title, description } = req.body;
@@ -101,4 +113,5 @@ module.exports = {
   deleteTemplateById,
   searchTemplates,
   findTemplatesByUserId,
+  findTemplatesByUser,
 };

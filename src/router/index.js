@@ -5,6 +5,7 @@ const templateController = require("../controller/templateController");
 const formController = require("../controller/formController");
 const commentController = require("../controller/commentController");
 const salesforceController = require("../controller/salesforceController");
+const jiraController = require("../controller/jiraController");
 const { checkToken } = require("../middleware/auth");
 
 const router = Router();
@@ -54,10 +55,24 @@ router.get("/comment", commentController.getCommentByTemplateId);
 //private
 router.post("/comment/create", checkToken, commentController.createComment);
 
-//form route-------------------------------------------------------------;
+//Salesforce route-------------------------------------------------------------;
 router.post(
   "/salesforce/create",
   checkToken,
   salesforceController.createSalesForce
 );
+
+// ---------------jira route-----------------------
+router.post("/ticket/create", checkToken, jiraController.createTicket);
+router.get("/ticket", checkToken, jiraController.getTicket);
+router.get("/priority", jiraController.getPriorityList);
+router.get("/status", jiraController.getStatusList);
+
+// ---------------oddo route-----------------------
+router.get(
+  "/templateByUser",
+  checkToken,
+  templateController.findTemplatesByUser
+);
+
 module.exports = router;
